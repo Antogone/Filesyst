@@ -6,6 +6,7 @@
 
 void filesystem_init(filesystem *fs){
 	strcpy(fs->root->name,"root");
+	fs->root->parents = NULL;
 	fs->root->t = DIR;
 	directory *dir = malloc(sizeof(directory));
 	dir->child = NULL;
