@@ -3,11 +3,11 @@
 
 #pragma warning (disable:4996)
 
-typedef enum type { DIR, FIC }t;
+typedef enum type { DIR, FIC }type;
 
 typedef struct node {
 	char* name;
-	t type;
+	type t;
 	void *data;
 	struct node* parents;
 }node;
