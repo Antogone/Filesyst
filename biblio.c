@@ -27,12 +27,12 @@ void filesystem_free(filesystem *fs){
 void free_node(node* nd){
 	if(nd == NULL)
     return;
-	if (nd->type == 0){
+	if (nd->t == 0){
 		directory *ptr = (directory*) nd->data;
 		free_node(ptr->child);
 		free_node(ptr->bro);
 	}
-  if (nd->type ==1){
+  if (nd->t ==1){
 		file *ptr = (file*) nd->data;
 		free(ptr->cont);
   }
@@ -44,9 +44,10 @@ node* filesystem_get_root(filesystem *fsys){
 }
 
 node* directory_find(node* dir, const char* name){
-	if(nd == NULL)
+	if(dir == NULL)
     return;
-	directory *ptr = (directory*) nd->data;
+
+	directory *ptr = (directory*) dir->data;
 	if(strcmp(ptr->child->name,name)==0){
 		return ptr->child;
 	}
