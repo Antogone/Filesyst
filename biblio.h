@@ -9,14 +9,16 @@ typedef struct node {
 	char* name;
 	int type;
 	void *data;
+	struct node* parents;
 }node;
 
 // .. = remonte
 // ./ descend
 
 
-typedef struct filesystem {
+typedef struct filesystem { // racine
 	node* root;
+	char* filesystname;
 }filesystem;
 
 
