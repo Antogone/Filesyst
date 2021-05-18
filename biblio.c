@@ -40,7 +40,7 @@ void free_node(node* nd){
 }
 
 node* filesystem_get_root(filesystem *fsys){
-	//pas compris à quoi sert cette fonction probablement que notre structure fylesystem est bizarre
+	return fsys->root;
 }
 
 node* directory_find(node* dir, const char* name){
