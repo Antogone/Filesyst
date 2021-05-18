@@ -36,19 +36,32 @@ typedef struct directory {
 }directory;
 
 
-
+// I - a finir
 void filesystem_init(filesystem *fs);
 void filesystem_free(filesystem *fs);
 void free_node(node* n);
+
+
+// A
 node* filesystem_get_root(filesystem *fsys);
+
+// A - doit finir
 node* directory_find(node* dir, const char* name);
+
+// I 
 node* directory_add_file(node* dir, const char* name);
 node* directory_add_directory(node* dir, const char* name);
+
+
+//I
 int directory_remove_node(node* dir, const char* name);
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
+
+//A
 void file_print(node* file,int with_content);
 void directory_print(node* dir,int depth,int with_content);
 void filesystem_print(filesystem* fs,int depth,int with_content);
-void foo(node* nd);
+
+
 #endif
