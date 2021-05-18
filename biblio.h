@@ -3,13 +3,14 @@
 
 #pragma warning (disable:4996)
 
-typedef enum type { DIR, FIC }type;
+typedef enum type { DIR, FI }type;
 
 typedef struct node {
 	char* name;
 	type t;
 	void *data;
 	struct node* parents;
+	struct node* bro;
 }node;
 
 // .. = remonte
@@ -32,7 +33,6 @@ typedef struct file {
 
 typedef struct directory {
 	node* child;
-	node* bro;
 }directory;
 
 
@@ -47,7 +47,7 @@ node* filesystem_get_root(filesystem *fsys);
 
 // A - doit finir
 node* directory_find(node* dir, const char* name);
-
+node* find_rec(node*dir,const char* name);
 // I
 node* directory_add_file(node* dir, const char* name);
 node* directory_add_directory(node* dir, const char* name);

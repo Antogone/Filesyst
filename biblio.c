@@ -7,10 +7,10 @@
 void filesystem_init(filesystem *fs){
 	strcpy(fs->root->name,"root");
 	fs->root->parents = NULL;
+	fs->bro = NULL;
 	fs->root->t = DIR;
 	directory *dir = malloc(sizeof(directory));
 	dir->child = NULL;
-	dir->bro = NULL;
 	fs->root->data = dir;
 	free(dir);
 }
@@ -20,17 +20,16 @@ void filesystem_free(filesystem *fs){
     return;
 	directory *ptr = (directory*) fs->root;
 	free_node(ptr->child);
-	free_node(ptr->bro);//normalement pas nécessaire car root ne devrait pas avoir de frère
 	free(fs);
 }
 
 void free_node(node* nd){
 	if(nd == NULL)
     return;
+	free_node(nd->bro);
 	if (nd->t == 0){
 		directory *ptr = (directory*) nd->data;
 		free_node(ptr->child);
-		free_node(ptr->bro);
 	}
   if (nd->t ==1){
 		file *ptr = (file*) nd->data;
@@ -46,22 +45,76 @@ node* filesystem_get_root(filesystem *fsys){
 node* directory_find(node* dir, const char* name){
 	if(dir == NULL)
     return;
-
 	directory *ptr = (directory*) dir->data;
-	if(strcmp(ptr->child->name,name)==0){
-		return ptr->child;
+	return find_rec(ptr->child);
+}
+node* find_rec(node* nd, const char* name){
+	if(nd == NULL)
+    return;
+	if(strcmp(nd->name,name) == 0){
+		return nd;
 	}
-	if(strcmp(ptr->bro->name,name)==0){
-		return ptr->bro;
-	}
-	if(ptr->child->t==DIR){
-		return directory_find(ptr->child->data,name);
-	}
-	if(ptr->bro->t==DIR){
-		return directory_find(ptr->bro->data,name);
+	else {
+		node* res = malloc(sizeof(node));
+		if(nd->t==DIR){
+			directory *ptr = (directory*) dir->data;
+			res=find_rec(ptr->child,name);
+		if (res!=NULL) return res;
+		}
+		res=find_rec(nd->bro,name);
+		return res;
 	}
 }
 
+node* directory_add_file(node* dir, const char* name){
+
+	if(directory_find(dir,name)!=NULL){
+		return;
+	}
+
+	directory *ptr = (directory*) dir->data;
+
+	node* fadd = malloc(sizeof(node);
+	fadd->name = name;
+	fadd->type = FI;
+	file faddfil;
+	fadd->data = faddfil;
+
+	if(ptr->child==NULL){
+		ptr->child = *fadd;
+	}
+	else {
+		node* freebro = ptr->child->bro;
+		while (freebro!=NULL) {
+			freebro = freebro->bro;
+		}
+		freebro = *fadd;
+	}
+}
+
+node* directory_add_directory(node* dir, const char* name){
+	if(directory_find(name)!=NULL){
+		return;
+	}
+	directory *ptr = (directory*) dir->data;
+
+	node* diradd = malloc(sizeof(node);
+	diradd->name = name;
+	diradd->type = DIR;
+	directory diraddfil;
+	diradd->data = diraddfil;
+
+	if(ptr->child==NULL){
+		ptr->child = *diradd;
+	}
+	else {
+		node* freebro = ptr->child->bro;
+		while (freebro!=NULL) {
+			freebro = freebro->bro;
+		}
+		freebro = *diradd;
+	}
+}
 
 
 
