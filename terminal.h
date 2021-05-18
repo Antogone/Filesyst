@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <Windows.h>
 
 void clearEcran();
 size_t my_getline(char** lineptr, size_t* n, FILE* stream);
