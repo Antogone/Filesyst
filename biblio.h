@@ -3,11 +3,11 @@
 
 #pragma warning (disable:4996)
 
-
+typedef enum type { DIR, FIC }t;
 
 typedef struct node {
 	char* name;
-	int type;
+	t type;
 	void *data;
 	struct node* parents;
 }node;
@@ -48,7 +48,7 @@ node* filesystem_get_root(filesystem *fsys);
 // A - doit finir
 node* directory_find(node* dir, const char* name);
 
-// I 
+// I
 node* directory_add_file(node* dir, const char* name);
 node* directory_add_directory(node* dir, const char* name);
 
