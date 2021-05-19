@@ -7,7 +7,7 @@
 void filesystem_init(filesystem *fs){
 	strcpy(fs->root->name,"root");
 	fs->root->parents = NULL;
-	fs->bro = NULL;
+	fs->root->bro = NULL;
 	fs->root->t = DIR;
 	directory *dir = malloc(sizeof(directory));
 	dir->child = NULL;
@@ -32,8 +32,7 @@ void free_node(node* nd){
 		free_node(ptr->child);
 	}
   if (nd->t ==1){
-		file *ptr = (file*) nd->data;
-		free(ptr->cont);
+		free(nd->data);
   }
 	free(nd);
 }
@@ -44,20 +43,20 @@ node* filesystem_get_root(filesystem *fsys){
 
 node* directory_find(node* dir, const char* name){
 	if(dir == NULL)
-    return;
+    return NULL;
 	directory *ptr = (directory*) dir->data;
-	return find_rec(ptr->child);
+	return find_rec(ptr->child,name);
 }
 node* find_rec(node* nd, const char* name){
 	if(nd == NULL)
-    return;
+    return NULL;
 	if(strcmp(nd->name,name) == 0){
 		return nd;
 	}
 	else {
 		node* res = malloc(sizeof(node));
 		if(nd->t==DIR){
-			directory *ptr = (directory*) dir->data;
+			directory *ptr = (directory*) nd->data;
 			res=find_rec(ptr->child,name);
 		if (res!=NULL) return res;
 		}
@@ -69,48 +68,49 @@ node* find_rec(node* nd, const char* name){
 node* directory_add_file(node* dir, const char* name){
 
 	if(directory_find(dir,name)!=NULL){
-		return;
+		return NULL;
 	}
 
 	directory *ptr = (directory*) dir->data;
 
-	node* fadd = malloc(sizeof(node);
+	node* fadd = malloc(sizeof(node));
 	fadd->name = name;
-	fadd->type = FI;
+	fadd->t = FI;
 	file faddfil;
-	fadd->data = faddfil;
+	fadd->data = &faddfil;
 
-	return directory_add_node(dir,diradd);
+	return directory_add_node(dir,fadd);
 }
 
 node* directory_add_directory(node* dir, const char* name){
 	if(directory_find(dir,name)!=NULL){
-		return;
+		return NULL;
 	}
 	directory *ptr = (directory*) dir->data;
 
-	node* diradd = malloc(sizeof(node);
+	node* diradd = malloc(sizeof(node));
 	diradd->name = name;
-	diradd->type = DIR;
+	diradd->t = DIR;
+	diradd->parents = dir;
 	directory diraddfil;
-	diradd->data = diraddfil;
+	diradd->data = &diraddfil;
 
 	return directory_add_node(dir,diradd);
 }
 
-node* directory_add_node(node* dir, node*add){
+node* directory_add_node(node* dir, node* add){
 	directory *ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
-		ptr->child = *add;
+		ptr->child = add;
 	}
 	else {
 		node* freebro = ptr->child->bro;
 		while (freebro!=NULL) {
 			freebro = freebro->bro;
 		}
-		freebro = *add;
+		freebro = add;
 	}
-	return freebro;
+	return add;
 }
 
 int directory_remove_node(node* dir, const char* name){
