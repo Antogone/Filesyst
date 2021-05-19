@@ -125,7 +125,7 @@ node* directory_add_node(node* dir, node* add){ // Me semble OK
 	return add;
 }
 
-int directory_remove_node(node* dir, const char* name){ // PAS OK
+int directory_remove_node(node* dir, const char* name){ // PAS OK - ne supprime pas vraiment faut juste redirectionner les bro et on doit supprimer les childs ?
 	node* rm = directory_find(dir,name);
 	if(rm==NULL)
 		return 1;
