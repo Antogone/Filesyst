@@ -141,7 +141,10 @@ int directory_remove_node(node* dir, const char* name){ // PAS OK - ne supprime 
 
 
 void file_print(node* file, int with_content) {
-
+	if (with_content != 0) {
+		struct file* ptr = (struct file*)file->data;
+		printf("%s", ptr->cont.desc);
+	}
 }
 
 
