@@ -125,7 +125,7 @@ node* directory_add_node(node* dir, node* add){ // Me semble OK
 	return add;
 }
 
-int directory_remove_node(node* dir, const char* name){
+int directory_remove_node(node* dir, const char* name){ // PAS OK - Je suis entrain de modifs
 	node* rm = directory_find(dir,name);
 	if(rm==NULL)return 1;
 	node* next = rm->bro;
@@ -133,6 +133,7 @@ int directory_remove_node(node* dir, const char* name){
 	free(rm);
 	directory_add_node(dir,next);
 	return 0;
+
 }
 
 /***********************************************/
