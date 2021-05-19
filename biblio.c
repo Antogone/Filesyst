@@ -4,18 +4,19 @@
 #include <string.h>
 
 
-void filesystem_init(filesystem *fs){
+void filesystem_init(filesystem *fs){ //OK
 	strcpy(fs->root->name,"root");
 	fs->root->parents = NULL;
 	fs->root->bro = NULL;
+	fs->root->broG = NULL;
 	fs->root->t = DIR;
 	directory *dir = malloc(sizeof(directory));
 	dir->child = NULL;
 	fs->root->data = dir;
-	free(dir);
+	// free(dir);  --> bah non sinon ça le supprime ? fin le free me parait illogique ici genre ça eneleve l'initialisation
 }
 
-void filesystem_free(filesystem *fs){
+void filesystem_free(filesystem *fs){ // OK
 	if(fs == NULL)
     return;
 	directory *ptr = (directory*) fs->root;
@@ -23,9 +24,10 @@ void filesystem_free(filesystem *fs){
 	free(fs);
 }
 
-void free_node(node* nd){
+void free_node(node* nd){ // A discuter ensemble mais OK
 	if(nd == NULL)
     return;
+	//free_node(nd->broG);
 	free_node(nd->bro);
 	if (nd->t == 0){
 		directory *ptr = (directory*) nd->data;
@@ -37,17 +39,20 @@ void free_node(node* nd){
 	free(nd);
 }
 
-node* filesystem_get_root(filesystem *fsys){
+/***********************************************/
+
+node* filesystem_get_root(filesystem *fsys){ // OK
 	return fsys->root;
 }
 
-node* directory_find(node* dir, const char* name){
+node* directory_find(node* dir, char* name){ // OK mais a voir ensemble
 	if(dir == NULL)
     return NULL;
 	directory *ptr = (directory*) dir->data;
 	return find_rec(ptr->child,name);
 }
-node* find_rec(node* nd, const char* name){
+
+node* find_rec(node* nd, char* name){ // OK mais a voir ensemble
 	if(nd == NULL)
     return NULL;
 	if(strcmp(nd->name,name) == 0){
@@ -58,16 +63,23 @@ node* find_rec(node* nd, const char* name){
 		if(nd->t==DIR){
 			directory *ptr = (directory*) nd->data;
 			res=find_rec(ptr->child,name);
-		if (res!=NULL) return res;
+			if (res!=NULL) 
+				return res;
 		}
-		res=find_rec(nd->bro,name);
-		return res;
+		//res=find_rec(nd->bro,name);
+		//if (res != NULL)
+		//	return res;
+
+		return (res != NULL) ? res : find_rec(nd->bro, name);
 	}
 }
 
-node* directory_add_file(node* dir, const char* name){
+/***********************************************/
 
-	if(directory_find(dir,name)!=NULL){
+
+node* directory_add_file(node* dir, const char* name){ // A DISCUTER ENSEMBLE
+
+	if(directory_find(dir,name)!=NULL){ 
 		return NULL;
 	}
 
@@ -77,12 +89,12 @@ node* directory_add_file(node* dir, const char* name){
 	fadd->name = name;
 	fadd->t = FI;
 	file faddfil;
-	fadd->data = &faddfil;
+	fadd->data = &faddfil;  // faddfill est vide donc on ajoute rien la c'est problème ?
 
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, const char* name){
+node* directory_add_directory(node* dir, char* name){ // A discuter Ensemble
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
@@ -93,12 +105,12 @@ node* directory_add_directory(node* dir, const char* name){
 	diradd->t = DIR;
 	diradd->parents = dir;
 	directory diraddfil;
-	diradd->data = &diraddfil;
+	diradd->data = &diraddfil; // CHelou aussi a discuter ensemble
 
 	return directory_add_node(dir,diradd);
 }
 
-node* directory_add_node(node* dir, node* add){
+node* directory_add_node(node* dir, node* add){ // Me semble OK
 	directory *ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
 		ptr->child = add;
@@ -123,6 +135,14 @@ int directory_remove_node(node* dir, const char* name){
 	return 0;
 }
 
+/***********************************************/
+
+
+void file_print(node* file, int with_content) {
+
+}
+
+
 /*
  * modèle d'utilisation des types de noeud dans une fonction
  *
@@ -136,7 +156,6 @@ int directory_remove_node(node* dir, const char* name){
  * }
  *
  * */
-
 
 //
 //int main(){

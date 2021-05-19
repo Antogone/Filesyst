@@ -11,6 +11,7 @@ typedef struct node {
 	void *data;
 	struct node* parents;
 	struct node* bro;
+	struct node* broG;
 }node;
 
 // .. = remonte
@@ -36,26 +37,30 @@ typedef struct directory {
 }directory;
 
 
-// I - a finir
+// I - fini ???
 void filesystem_init(filesystem *fs);
 void filesystem_free(filesystem *fs);
 void free_node(node* n);
 
 
-// A
+// A - FINI
 node* filesystem_get_root(filesystem *fsys);
 
-// A - doit finir
-node* directory_find(node* dir, const char* name);
-node* find_rec(node*dir,const char* name);
-// I
-node* directory_add_file(node* dir, const char* name);
-node* directory_add_directory(node* dir, const char* name);
+// A I - FINI
+node* directory_find(node* dir, char* name);
+node* find_rec(node*dir, char* name);
+
+
+// I - FINI ????
+node* directory_add_file(node* dir, char* name);
+node* directory_add_directory(node* dir, char* name);
 node* directory_add_node(node* dir, node* add);
 
 
-//I
-int directory_remove_node(node* dir, const char* name);
+//I - FINI ???
+int directory_remove_node(node* dir, char* name);
+
+// I - A finir
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
 
