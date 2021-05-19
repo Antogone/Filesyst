@@ -80,20 +80,11 @@ node* directory_add_file(node* dir, const char* name){
 	file faddfil;
 	fadd->data = faddfil;
 
-	if(ptr->child==NULL){
-		ptr->child = *fadd;
-	}
-	else {
-		node* freebro = ptr->child->bro;
-		while (freebro!=NULL) {
-			freebro = freebro->bro;
-		}
-		freebro = *fadd;
-	}
+	return directory_add_node(dir,diradd);
 }
 
 node* directory_add_directory(node* dir, const char* name){
-	if(directory_find(name)!=NULL){
+	if(directory_find(dir,name)!=NULL){
 		return;
 	}
 	directory *ptr = (directory*) dir->data;
@@ -104,19 +95,33 @@ node* directory_add_directory(node* dir, const char* name){
 	directory diraddfil;
 	diradd->data = diraddfil;
 
+	return directory_add_node(dir,diradd);
+}
+
+node* directory_add_node(node* dir, node*add){
+	directory *ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
-		ptr->child = *diradd;
+		ptr->child = *add;
 	}
 	else {
 		node* freebro = ptr->child->bro;
 		while (freebro!=NULL) {
 			freebro = freebro->bro;
 		}
-		freebro = *diradd;
+		freebro = *add;
 	}
+	return freebro;
 }
 
-
+int directory_remove_node(node* dir, const char* name){
+	node* rm = directory_find(dir,name);
+	if(rm==NULL)return 1;
+	node* next = rm->bro;
+	rm->bro = NULL;
+	free(rm);
+	directory_add_node(dir,next);
+	return 0;
+}
 
 /*
  * modèle d'utilisation des types de noeud dans une fonction
