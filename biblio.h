@@ -65,8 +65,7 @@ file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
 
 //A
-void file_print(node* file,int with_content);
-void directory_print(node* dir,int depth,int with_content);
+ void directory_print(node* dir,int depth,int with_content);
 void filesystem_print(filesystem* fs,int depth,int with_content);
 
 

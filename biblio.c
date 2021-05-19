@@ -13,7 +13,6 @@ void filesystem_init(filesystem *fs){ //OK
 	directory *dir = malloc(sizeof(directory));
 	dir->child = NULL;
 	fs->root->data = dir;
-	// free(dir);  --> bah non sinon ça le supprime ? fin le free me parait illogique ici genre ça eneleve l'initialisation
 }
 
 void filesystem_free(filesystem *fs){ // OK
@@ -24,35 +23,34 @@ void filesystem_free(filesystem *fs){ // OK
 	free(fs);
 }
 
-void free_node(node* nd){ // A discuter ensemble mais OK
+void free_node(node* nd){  // OK
 	if(nd == NULL)
     return;
 	//free_node(nd->broG);
-	free_node(nd->bro);
 	if (nd->t == 0){
 		directory *ptr = (directory*) nd->data;
 		free_node(ptr->child);
 	}
-  if (nd->t ==1){
+	free_node(nd->bro);
+	 if (nd->t ==1){
 		free(nd->data);
-  }
+	 }
 	free(nd);
 }
 
-/***********************************************/
 
 node* filesystem_get_root(filesystem *fsys){ // OK
 	return fsys->root;
 }
 
-node* directory_find(node* dir, char* name){ // OK mais a voir ensemble
+node* directory_find(node* dir, char* name){ // OK
 	if(dir == NULL)
     return NULL;
 	directory *ptr = (directory*) dir->data;
 	return find_rec(ptr->child,name);
 }
 
-node* find_rec(node* nd, char* name){ // OK mais a voir ensemble
+node* find_rec(node* nd, char* name){ // OK
 	if(nd == NULL)
     return NULL;
 	if(strcmp(nd->name,name) == 0){
@@ -74,7 +72,7 @@ node* find_rec(node* nd, char* name){ // OK mais a voir ensemble
 	}
 }
 
-/***********************************************/
+
 
 
 node* directory_add_file(node* dir, const char* name){ // A DISCUTER ENSEMBLE
@@ -125,6 +123,10 @@ node* directory_add_node(node* dir, node* add){ // Me semble OK
 	return add;
 }
 
+
+/***********************************************/
+
+
 int directory_remove_node(node* dir, const char* name){ // PAS OK - ne supprime pas vraiment faut juste redirectionner les bro et on doit supprimer les childs ?
 	node* rm = directory_find(dir,name);
 	if(rm==NULL)
@@ -137,7 +139,7 @@ int directory_remove_node(node* dir, const char* name){ // PAS OK - ne supprime 
 
 }
 
-/***********************************************/
+
 
 
 void file_print(node* file, int with_content) {
