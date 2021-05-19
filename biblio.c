@@ -26,7 +26,6 @@ void filesystem_free(filesystem *fs){ // OK
 void free_node(node* nd){  // OK
 	if(nd == NULL)
     return;
-	//free_node(nd->broG);
 	if (nd->t == 0){
 		directory *ptr = (directory*) nd->data;
 		free_node(ptr->child);
@@ -72,10 +71,7 @@ node* find_rec(node* nd, char* name){ // OK
 	}
 }
 
-
-
-
-node* directory_add_file(node* dir, const char* name){ // A DISCUTER ENSEMBLE
+node* directory_add_file(node* dir, const char* name){ // OK
 
 	if(directory_find(dir,name)!=NULL){ 
 		return NULL;
@@ -92,7 +88,7 @@ node* directory_add_file(node* dir, const char* name){ // A DISCUTER ENSEMBLE
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, char* name){ // A discuter Ensemble
+node* directory_add_directory(node* dir, char* name){ // OK
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
@@ -108,7 +104,7 @@ node* directory_add_directory(node* dir, char* name){ // A discuter Ensemble
 	return directory_add_node(dir,diradd);
 }
 
-node* directory_add_node(node* dir, node* add){ // Me semble OK
+node* directory_add_node(node* dir, node* add){ // OK
 	directory *ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
 		ptr->child = add;
@@ -123,26 +119,29 @@ node* directory_add_node(node* dir, node* add){ // Me semble OK
 	return add;
 }
 
+int directory_remove_node(node* dir, const char* name){ //OK
+	node* rm = directory_find(dir,name);
+	if(rm==NULL)
+		return 1;
+
+	// Redirection
+	node* prev = rm->broG; 
+	node* next = rm->bro; 
+	next->broG = prev;
+	prev->bro = next;
+
+
+	rm->bro = NULL;
+	rm->broG = NULL;
+	free_node(rm);
+	return 0;
+}
+
 
 /***********************************************/
 
 
-int directory_remove_node(node* dir, const char* name){ // PAS OK - ne supprime pas vraiment faut juste redirectionner les bro et on doit supprimer les childs ?
-	node* rm = directory_find(dir,name);
-	if(rm==NULL)
-		return 1;
-	node* next = rm->bro;
-	rm->bro = NULL;
-	free(rm);
-	directory_add_node(dir,next);
-	return 0;
-
-}
-
-
-
-
-void file_print(node* file, int with_content) {
+void file_print(node* file, int with_content) { // Pas certain 
 	if (with_content != 0) {
 		struct file* ptr = (struct file*)file->data;
 		printf("%s", ptr->cont.desc);
