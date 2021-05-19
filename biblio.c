@@ -102,8 +102,8 @@ node* directory_add_directory(node* dir, char* name){ // A discuter Ensemble
 	diradd->name = name;
 	diradd->t = DIR;
 	diradd->parents = dir;
-	directory diraddfil;
-	diradd->data = &diraddfil; // CHelou aussi a discuter ensemble
+	directory* diraddfil = malloc(sizeof(directory));
+	diradd->data = diraddfil; 
 
 	return directory_add_node(dir,diradd);
 }
