@@ -26,10 +26,12 @@ typedef struct filesystem { // racine
 
 typedef struct file_content {
 	char* desc;
+	int taille;
 }file_content;
 
 typedef struct file {
-	file_content cont;
+	file_content* cont;
+	char* ext; // .txt .
 }file;
 
 typedef struct directory {
@@ -37,36 +39,39 @@ typedef struct directory {
 }directory;
 
 
-// I - fini ???
+// OK
 void filesystem_init(filesystem *fs);
 void filesystem_free(filesystem *fs);
 void free_node(node* n);
 
 
-// A - FINI
+// OK
 node* filesystem_get_root(filesystem *fsys);
 
-// A I - FINI
+// OK
 node* directory_find(node* dir, char* name);
 node* find_rec(node*dir, char* name);
 
 
-// I - FINI ????
+// OK
 node* directory_add_file(node* dir, char* name);
 node* directory_add_directory(node* dir, char* name);
 node* directory_add_node(node* dir, node* add);
 
 
-//I - FINI ???
+//OK
 int directory_remove_node(node* dir, char* name);
 
-// I - A finir
+//PAS OK
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
 
-//A
- void directory_print(node* dir,int depth,int with_content);
+
+// Semi OK
+void file_print(node* file, int with_content);
+void directory_print(node* dir,int depth,int with_content);
 void filesystem_print(filesystem* fs,int depth,int with_content);
+
 
 
 #endif

@@ -36,6 +36,8 @@ int main() {
             exit(0);
         else if (strcmp(arguments[0], "cd") == 0)
             printf("cd\n");
+        else if (strcmp(arguments[0], "pwd") == 0)
+            printf("pwd\n");
         else if (strcmp(arguments[0], "cat") == 0)
             printf("cat\n");
         else if (strcmp(arguments[0], "touch") == 0)

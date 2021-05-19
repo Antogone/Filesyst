@@ -76,13 +76,12 @@ node* directory_add_file(node* dir, const char* name){ // OK
 	if(directory_find(dir,name)!=NULL){ 
 		return NULL;
 	}
-
 	directory *ptr = (directory*) dir->data;
-
 	node* fadd = malloc(sizeof(node));
-	fadd->name = name;
 	fadd->t = FI;
 	file* faddfil = malloc(sizeof(file));
+	fadd->name = name;
+	faddfil->ext = strstr(name,".");
 	fadd->data = faddfil;  
 
 	return directory_add_node(dir,fadd);
@@ -144,8 +143,26 @@ int directory_remove_node(node* dir, const char* name){ //OK
 void file_print(node* file, int with_content) { // Pas certain 
 	if (with_content != 0) {
 		struct file* ptr = (struct file*)file->data;
-		printf("%s", ptr->cont.desc);
+		printf("%s", ptr->cont->desc);
 	}
+}
+
+
+
+void directory_print(node* dir, int depth, int with_content) {
+	// depth = profondeur
+	// with_content = si on affiche le contenu des fichiers
+
+	int decalage_visu = 0;
+
+
+	//
+	
+}
+
+
+void filesystem_print(filesystem* fs, int depth, int with_content) {
+
 }
 
 
