@@ -86,8 +86,8 @@ node* directory_add_file(node* dir, const char* name){ // A DISCUTER ENSEMBLE
 	node* fadd = malloc(sizeof(node));
 	fadd->name = name;
 	fadd->t = FI;
-	file faddfil;
-	fadd->data = &faddfil;  // faddfill est vide donc on ajoute rien la c'est problème ?
+	file* faddfil = malloc(sizeof(file));
+	fadd->data = faddfil;  
 
 	return directory_add_node(dir,fadd);
 }
