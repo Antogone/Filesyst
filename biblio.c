@@ -37,7 +37,6 @@ void free_node(node* nd){  // OK
 	free(nd);
 }
 
-
 node* filesystem_get_root(filesystem *fsys){ // OK
 	return fsys->root;
 }
@@ -152,11 +151,35 @@ void file_print(node* file, int with_content) { // Pas certain
 void directory_print(node* dir, int depth, int with_content) {
 	// depth = profondeur
 	// with_content = si on affiche le contenu des fichiers
+	
+	int prof = 0;
+	char* strplus = "+";
+	char* strdec = "\t";
 
-	int decalage_visu = 0;
+	//Pas bien positionné mais ecrite corretement 
+	if (prof >= depth) {
+		for (int i = 0; i < depth; i++) {
+			strcat(strplus, strdec); // va nous faire un + \t et apres va rajouter des \t a chaque fois qu'on va descendre de nvieau
+		}
+	}
+	// fait tout les frere mais pas encore les enfant
+	// peut etre faire une fonction de descente ?
+	//node* nodecpt = dir->bro
 
+	// soucis au for
+	for (directory* ptr = (directory*)dir->data; ptr != NULL ; ptr->child->data =(directory*) ptr->child->data->child ){
+			if (nodecpt->t == DIR) {
+				printf("%s directory : %s ", strplus, nodecpt->name);
+			}
+			else if (nodecpt->t == FI) {
+				file* ptrfi = (file*)dir->data;
 
-	//
+				printf("%s file : %s , size : %d", strplus, nodecpt->name, ptrfi->cont->taille);
+
+			}
+	}
+
+	//le with_content pas implementer mais juste une ligne a ajouter au printe des fic : "content" et utiliser la fonction file print
 	
 }
 
