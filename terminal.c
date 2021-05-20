@@ -70,8 +70,12 @@ int main() {
                 if (n_args < 2) {
                     printf("cat: missing operand \n Try 'man' for more information \n");
                 }
-                else
-                    file_print(directory_find(current, arguments[1]), 1);
+                else {
+                    struct file* ptr = (struct file*)directory_find(current, arguments[1])->data;
+                    printf("%s", (char*)ptr->cont->desc);
+                    printf("\n");
+                }
+                    
 
         }
         else if (strcmp(arguments[0], "touch") == 0){  // OK

@@ -10,6 +10,7 @@ void file_print(node* file, const int with_content) { // OK (pas testé contenu)
 	printf("\n");
 }
 
+
 void directory_print(node* dir, int depth,const int with_content,int step) {//penser à mettre step=0 au premier appel
 	// depth = profondeur max
 	// with_content = si on affiche le contenu des fichiers
