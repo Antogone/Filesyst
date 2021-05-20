@@ -4,9 +4,19 @@
 
 int main() {
 
-  filesystem *fs = malloc(sizeof(filesystem));
-  filesystem_init(fs);
-  node* current = fs->root;
+
+    filesystem* fs = malloc(sizeof(filesystem));
+    filesystem_init(fs);
+    directory_add_file(fs->root, "fic.txt");
+    filesystem_print(fs, -1, 0);
+    node* dira = directory_add_directory(fs->root, "Documents");
+    directory_add_file(dira, "fic1.txt");
+    filesystem_print(fs, -1, 0);
+    directory_remove_node(fs->root, "fic.txt");
+    filesystem_print(fs, -1, 0);
+    directory_add_file(fs->root, "fic2.txt");
+    filesystem_print(fs, 3, 0);
+    node* current = fs->root;
 
     while (1) {
         char* ligne = NULL; size_t capa = 0;
@@ -59,9 +69,7 @@ int main() {
             printf("mkdir: missing operand \n Try 'man' for more information \n");
           }
           else {
-            char* name = arguments[1];
-            directory_add_directory(current,name);
-            //prolème: le nom est perdu
+            directory_add_directory(current,(char*) arguments[1]);
           }
         }
         else if (strcmp(arguments[0], "ls") == 0){
