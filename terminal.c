@@ -4,8 +4,8 @@
 
 int main() {
 
-
     filesystem* fs = malloc(sizeof(filesystem));
+    filesystem_init(fs);
     node* current = fs->root;
 
     while (1) {
