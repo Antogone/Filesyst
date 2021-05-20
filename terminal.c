@@ -52,14 +52,14 @@ int main() {
             printf("\t exit : quitte le programme\n");
 
         }
-        else if (strcmp(arguments[0], "exit") == 0) { //OK
+        else if (strcmp(arguments[0], "exit") == 0) {
             filesystem_free(fs);
             exit(0);
         }
         else if (strcmp(arguments[0], "cd") == 0) {
             printf("cd\n");
         }
-        else if (strcmp(arguments[0], "pwd") == 0) { //OK
+        else if (strcmp(arguments[0], "pwd") == 0) {
             print_path(current);
         }
         else if (strcmp(arguments[0], "cat") == 0) {
@@ -78,7 +78,7 @@ int main() {
                     
 
         }
-        else if (strcmp(arguments[0], "touch") == 0){  // OK
+        else if (strcmp(arguments[0], "touch") == 0){
             if (n_args < 2) {
                 printf("touch: missing operand \n Try 'man' for more information \n");
 
@@ -86,7 +86,7 @@ int main() {
             else
                 directory_add_file(current, (char*)arguments[1]);
          }
-        else if (strcmp(arguments[0], "mkdir") == 0){ //OK
+        else if (strcmp(arguments[0], "mkdir") == 0){
           if(n_args<2){
             printf("mkdir: missing operand \n Try 'man' for more information \n");
           }
@@ -94,16 +94,16 @@ int main() {
             directory_add_directory(current,(char*) arguments[1]);
           }
         }
-        else if (strcmp(arguments[0], "ls") == 0){ // liste les fic et dir du cuirrent
+        else if (strcmp(arguments[0], "ls") == 0){
           filesystem_print(fs,1,0);
         }
-        else if (strcmp(arguments[0], "tree") == 0){ // OK
+        else if (strcmp(arguments[0], "tree") == 0){
             if(strcmp(arguments[1], "1") == 0)
                 filesystem_print(fs, -1, 1);
              else 
                 filesystem_print(fs,-1,0);
         }
-        else if (strcmp(arguments[0], "edit") == 0) { //OK
+        else if (strcmp(arguments[0], "edit") == 0) {
             if (directory_find(current, arguments[1]) == NULL) {
                 printf("edit impossible, file not existant\n");
             }

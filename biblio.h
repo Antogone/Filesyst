@@ -18,11 +18,7 @@ typedef struct node {
 	struct node* broG;
 }node;
 
-// .. = remonte
-// ./ descend
-
-
-typedef struct filesystem { // racine
+typedef struct filesystem {
 	node* root;
 	char* filesystname;
 }filesystem;
@@ -35,7 +31,6 @@ typedef struct file_content {
 
 typedef struct file {
 	file_content* cont;
-	char* ext; // .txt .
 }file;
 
 typedef struct directory {
@@ -43,32 +38,16 @@ typedef struct directory {
 }directory;
 
 
-// OK
 void filesystem_init(filesystem *fs);
 void filesystem_free(filesystem *fs);
 void free_node(node* n);
-
-
-// OK
 node* filesystem_get_root(filesystem *fsys);
-
-// OK
 node* directory_find(node* dir, const char* name);
 node* find_rec(node*dir, const char* name);
-
-
-// OK
 node* directory_add_file(node* dir, const char* name);
 node* directory_add_directory(node* dir, const char* name);
 node* directory_add_node(node* dir, node* add);
-
-
-//OK
 int directory_remove_node(node* dir, const char* name);
-
-
-
-//OK
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
 file_content* crea_content(char* valeur);

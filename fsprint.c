@@ -2,7 +2,7 @@
 #include "fsprint.h"
 
 
-void file_print(node* file, const int with_content) { // OK (pas testé contenu)
+void file_print(node* file, const int with_content) { 
 	struct file* ptr = (struct file*)file->data;
 	printf("file: %s, size : %d", file->name, ptr->cont->taille);
 	if (with_content != 0)
@@ -11,9 +11,8 @@ void file_print(node* file, const int with_content) { // OK (pas testé contenu)
 }
 
 
-void directory_print(node* dir, int depth,const int with_content,int step) {//penser à mettre step=0 au premier appel
-	// depth = profondeur max
-	// with_content = si on affiche le contenu des fichiers
+void directory_print(node* dir, int depth,const int with_content,int step) {
+	
 	printf("directory: %s\n",dir->name);
 	if (depth<=0){
 		directory* ptr = (directory*)dir->data;
