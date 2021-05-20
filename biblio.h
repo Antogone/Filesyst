@@ -26,7 +26,7 @@ typedef struct filesystem {
 
 typedef struct file_content {
 	char* desc;
-	int taille;
+	int fsize;
 }file_content;
 
 typedef struct file {

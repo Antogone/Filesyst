@@ -100,8 +100,9 @@ int main() {
             print_path(current);
             printf("\n");
         }
-        else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
+        else if (strcmp(arguments[0], "cat") == 0) {// Affiche contenu du fic
             printf("cat\n");
+        }
         else if (strcmp(arguments[0], "touch") == 0) {  // OK
             if (n_args < 2) {
                 printf("touch: argument manquant \n Essayez la commande 'man' pour plus d'information \n");
@@ -120,7 +121,7 @@ int main() {
             if (directory_find(current, arguments[1]) == NULL) {
                 printf("cat impossible, file not existant\n");
             }
-            else
+            else{
                 if (n_args < 2) {
                     printf("cat: missing operand \n Try 'man' for more information \n");
                 }
@@ -129,56 +130,66 @@ int main() {
                     printf("%s", (char*)ptr->cont->desc);
                     printf("\n");
                 }
-
-
-        }
-        else if (strcmp(arguments[0], "touch") == 0) {
+            }
+          }
+          else if (strcmp(arguments[0], "touch") == 0) {
             if (n_args < 2) {
                 printf("touch: missing operand \n Try 'man' for more information \n");
 
             }
             else
                 directory_add_file(current, (char*)arguments[1]);
-        }
-        else if (strcmp(arguments[0], "mkdir") == 0) {
+          }
+          else if (strcmp(arguments[0], "mkdir") == 0) {
             if (n_args < 2) {
                 printf("mkdir: argument manquant \n Essayez la commande 'man' pour plus d'information");
             }
             else {
                 directory_add_directory(current, (char*)arguments[1]);
             }
-        }
-        else if (strcmp(arguments[0], "ls") == 0) { // liste les fic et dir du cuirrent
+          }
+          else if (strcmp(arguments[0], "ls") == 0) { // liste les fic et dir du current
             directory* ptr = (directory*)current->data;
             if (ptr->child != NULL) {
-                directory_print(ptr->child, 1, 1, 0);
+                node_print(ptr->child, 1, 1, 0);
             }
-            else if (strcmp(arguments[0], "ls") == 0) {
-                filesystem_print(fs, 1, 0);
-            }
-            else if (strcmp(arguments[0], "tree") == 0) {
-                if (strcmp(arguments[1], "1") == 0)
-                    filesystem_print(fs, -1, 1);
-                else
-                    filesystem_print(fs, -1, 0);
+          }
+          else if (strcmp(arguments[0], "tree") == 0) {
+                if (strcmp(arguments[1], "1") == 0){
+                    printf("filesystem");
+                  	if(fs->filesystname!=NULL){
+                  		printf("%s", fs->filesystname);
+                  	}
+                  	printf("\n");
+                  	node_print(current,-1,1,0);
+                  }
+                else{
+                    printf("filesystem");
+                  	if(fs->filesystname!=NULL){
+                  		printf("%s", fs->filesystname);
+                  	}
+                  	printf("\n");
+                  	node_print(current,0,0,0);
+                }
             }
             else if (strcmp(arguments[0], "edit") == 0) {
                 if (directory_find(current, arguments[1]) == NULL) {
                     printf("edit impossible, file not existant\n");
                 }
-                else
+                else{
                     if (n_args < 3) {
                         printf("edit: missing operand \n Try 'man' for more information \n");
                     }
                     else
                         file_set_content(directory_find(current, arguments[1]), crea_content((char*)arguments[2]));
+                }
             }
-            else
+            else {
                 printf("Commande \"%s\" inconnue.\n", arguments[0]);
+            }
             free(ligne);
         }
 
-    }
     system("pause");
     return 0;
 
