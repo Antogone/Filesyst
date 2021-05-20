@@ -11,11 +11,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void file_print(node* file, int with_content);
-void directory_print(node* dir,int depth,int with_content,int step);
-void node_print(node* nd, int depth, int with_content,int step);
+void file_print(node* file,const int with_content);
+void directory_print(node* dir,int depth,const int with_content,int step);
+void node_print(node* nd, int depth, const int with_content,int step);
 char* indent(int step);
-void filesystem_print(filesystem* fs,int depth,int with_content);
+void filesystem_print(filesystem* fs,int depth,const int with_content);
 void print_path(node* dir);
 
 #endif

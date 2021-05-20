@@ -68,8 +68,9 @@ int directory_remove_node(node* dir, const char* name);
 
 
 
-//PAS OK
+//OK
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
+file_content* crea_content(char* valeur);
 
 #endif

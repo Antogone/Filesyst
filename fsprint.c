@@ -2,16 +2,16 @@
 #include "fsprint.h"
 
 
-void file_print(node* file, int with_content) { // OK (pas testé contenu)
-	printf("file: %s", file->name);
-	if (with_content != 0) {
-		struct file* ptr = (struct file*)file->data;
-		printf(",content: %s,size :%d", ptr->cont->desc,ptr->cont->taille);
-	}
+void file_print(node* file, const int with_content) { // OK (pas testé contenu)
+	struct file* ptr = (struct file*)file->data;
+	if (with_content == 0) 
+		printf("file: %s, size : %d", file->name, ptr->cont->taille);
+	if (with_content != 0)
+		printf("file: %s, content: %s ,size :%d", file->name,ptr->cont->desc, ptr->cont->taille);
 	printf("\n");
 }
 
-void directory_print(node* dir, int depth, int with_content,int step) {//penser à mettre step=0 au premier appel
+void directory_print(node* dir, int depth,const int with_content,int step) {//penser à mettre step=0 au premier appel
 	// depth = profondeur max
 	// with_content = si on affiche le contenu des fichiers
 	printf("directory: %s\n",dir->name);
@@ -28,7 +28,7 @@ void directory_print(node* dir, int depth, int with_content,int step) {//penser 
 	}
 }
 
-void node_print(node* nd, int depth, int with_content,int step){
+void node_print(node* nd, int depth,const int with_content,int step){
 		while (nd!=NULL){
 			char* strplus = indent(step);
 			printf("%s",strplus);
@@ -52,7 +52,7 @@ char* indent(int step){
 	return strplus;
 }
 
-void filesystem_print(filesystem* fs, int depth, int with_content) {
+void filesystem_print(filesystem* fs, int depth, const int with_content) {
 	printf("filesystem");
 	if(fs->filesystname!=NULL){
 		printf("%s", fs->filesystname);

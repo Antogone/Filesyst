@@ -44,10 +44,11 @@ int main() {
             printf("\t cd [dos] : permet de changer de dossier courant \n");
             printf("\t pwd : permet d'afficher le chemin vers le dossier courant \n");
             printf("\t cat [fic] : permet d’afficher le contenu d’un fichier  \n");
-            printf("\t touch [nom.ext] : permet de créer un fichier  \n");
+            printf("\t touch [nom] : permet de créer un fichier  \n");
             printf("\t mkdir [nom] : permet de créer un dossier  \n");
             printf("\t ls : permet de lister le contenu du dossier courant \n");
-            printf("\t tree : permet d’afficher l’arborescence à partir du dossier courant \n");
+            printf("\t tree {1}: permet d’afficher l’arborescence à partir du dossier courant, si 1 alors on affiche les contenues \n");
+            printf("\t edit [nom] [contenu] : permet d'editer le contenu d'un fichier \n");
             printf("\t exit : quitte le programme\n");
 
         }
@@ -78,7 +79,7 @@ int main() {
         }
         else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
             printf("cat\n");
-        else if (strcmp(arguments[0], "touch") == 0)  // cree un fichier
+        else if (strcmp(arguments[0], "touch") == 0)  // OK
         if(n_args<2){
           printf("touch: argument manquant \n Essayez la commande 'man' pour plus d'information \n");
         }
@@ -99,8 +100,22 @@ int main() {
             directory_print(ptr->child,1,1,0);
           }
         }
-        else if (strcmp(arguments[0], "tree") == 0){
-          filesystem_print(fs,-1,0);
+        else if (strcmp(arguments[0], "tree") == 0){ // OK
+            if(strcmp(arguments[1], "1") == 0)
+                filesystem_print(fs, -1, 1);
+             else 
+                filesystem_print(fs,-1,0);
+        }
+        else if (strcmp(arguments[0], "edit") == 0) { //OK
+            if (directory_find(current, arguments[1]) == NULL) {
+                printf("edit impossible, file not existant\n");
+            }
+            else
+                if (n_args < 3) {
+                    printf("edit: missing operand \n Try 'man' for more information \n");
+                }
+                else
+                  file_set_content(directory_find(current, arguments[1]), crea_content(arguments[2]));
         }
         else
             printf("Commande \"%s\" inconnue.\n", arguments[0]);

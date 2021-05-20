@@ -89,7 +89,10 @@ node* directory_add_file(node* dir, const char* name){ // OK
 	fadd->parent = dir;
 	file* faddfil = malloc(sizeof(file));
 	faddfil->ext = strstr(name,".");
+	faddfil->cont = malloc(sizeof(file_content));
+	faddfil->cont->taille = 0;
 	fadd->data = faddfil;
+
 	return directory_add_node(dir,fadd);
 }
 
@@ -160,14 +163,23 @@ int directory_remove_node(node* dir, const char* name){ //OK
 file_content* file_get_content(node* file) {
 	struct file* ptr = (struct file*)file->data;
 	return ptr->cont;
-
 }
 
 int file_set_content(node* file, file_content* content) {
 	struct file* ptr = (struct file*)file->data;
 	free(ptr->cont);
-	ptr->cont = content;
+	ptr->cont = malloc(sizeof(file_content));
+	ptr->cont->taille = content->taille;
+	ptr->cont->desc = content->desc;
 	return 0;
+}
+
+
+file_content* crea_content(char* valeur) {
+	file_content* fic = malloc(sizeof(file_content));
+	fic->desc = valeur;
+	fic->taille = strlen(valeur) + 1;
+	return fic;
 }
 
 /***********************************************/
