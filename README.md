@@ -14,8 +14,8 @@ Pour l'ajout de dossier ou fichier à l'arborescence on passe par une fonction g
 De même pour les fonctions de suppression avec directory_remove_node.
 
 Fonctions du terminal:
-Comme Antoine travaille sous widows, la principale difficulté pour le terminale a été de recodé une fonction my_getline(faite en cours) afin de pouvoir l'utiliser comme nous l'avons appris durant les derniers tp (Nous nous sommes basées des derniers cours). De manière globale, nous entrons notre chaine de caractère et ils sont ensuite séparé par des espaces (arguments[]) et nous les utilisons ensuite dans notre terminale lors d'appel de fonction.
+Comme Antoine travaille sous widows, la principale difficulté pour le terminale a été de recodé une fonction my_getline(faite en cours) afin de pouvoir l'utiliser comme nous l'avons appris durant les derniers tp (Nous nous sommes basées des derniers cours). De manière globale, nous entrons notre chaine de caractère et ils sont ensuite séparés par des espaces (strtok() stoockés dans arguments[]) et nous les utilisons ensuite dans notre terminale lors d'appel de fonction.
+Le cd prend en compte les notations ./ pour un chemin relatif et / pour le chemin absolu cd .. permet de remonter vers le parent du dossier actuel mais cd ../dossier donne le même résultat.
 
 Fonctions d'affichage :
 On a fait le choix de mettre les fonctions d'affichage dans des fichiers de compilation séparés (fsprint.c et fsprint.h) pour faciliter la lisibilité.
-
