@@ -9,7 +9,7 @@ typedef struct node {
 	char* name;
 	type t;
 	void *data;
-	struct node* parents;
+	struct node* parent;
 	struct node* bro;
 	struct node* broG;
 }node;

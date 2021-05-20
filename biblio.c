@@ -8,7 +8,7 @@ void filesystem_init(filesystem *fs){ //OK
 	fs->root = malloc(sizeof(node));
 	fs->root->name = malloc(10*sizeof(char));
 	strcpy(fs->root->name,"root");
-	fs->root->parents = NULL;
+	fs->root->parent = NULL;
 	fs->root->bro = NULL;
 	fs->root->broG = NULL;
 	fs->root->t = DIR;
@@ -83,8 +83,11 @@ node* directory_add_file(node* dir, char* name){ // OK
 	directory *ptr = (directory*) dir->data;
 	node* fadd = malloc(sizeof(node));
 	fadd->t = FI;
-	file* faddfil = malloc(sizeof(file));
 	fadd->name = name;
+	fadd->bro = NULL;
+	fadd->broG = NULL;
+	fadd->parent = dir;
+	file* faddfil = malloc(sizeof(file));
 	faddfil->ext = strstr(name,".");
 	fadd->data = faddfil;
 	return directory_add_node(dir,fadd);
@@ -101,7 +104,7 @@ node* directory_add_directory(node* dir, char* name){ // OK
 	diradd->t = DIR;
 	diradd->bro = NULL;
 	diradd->broG = NULL;
-	diradd->parents = dir;
+	diradd->parent = dir;
 	directory* diraddfil = malloc(sizeof(directory));
 	diradd->data = diraddfil;
 
@@ -132,10 +135,20 @@ int directory_remove_node(node* dir, char* name){ //OK
 	// Redirection
 	node* prev = rm->broG;
 	node* next = rm->bro;
-	next->broG = prev;
-	prev->bro = next;
-
-
+	node* par = rm->parent;
+	directory* ptr = (directory *) par->data;
+	if(ptr->child!=rm){
+		if(next!=NULL){
+			next->broG = prev;
+		}
+		prev->bro = next;
+	}
+	else{
+		if(next!=NULL){
+			next->broG = NULL;
+		}
+		ptr->child=NULL;
+	}
 	rm->bro = NULL;
 	rm->broG = NULL;
 	free_node(rm);
@@ -219,13 +232,14 @@ void filesystem_print(filesystem* fs, int depth, int with_content) {
  *
  * */
 
-//
-// int main(){
-// 	filesystem *fs = malloc(sizeof(filesystem));
-// 	filesystem_init(fs);
-// 	directory_add_file(fs->root,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	filesystem_free(fs);
-// 	return 0;
-//
-// }
+
+int main(){
+	filesystem *fs = malloc(sizeof(filesystem));
+	filesystem_init(fs);
+	directory_add_file(fs->root,"fic.txt");
+	filesystem_print(fs,-1,0);
+	directory_remove_node(fs->root,"fic.txt");
+	filesystem_print(fs,-1,0);
+	return 0;
+
+}
