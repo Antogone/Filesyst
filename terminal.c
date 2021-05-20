@@ -77,12 +77,8 @@ int main() {
             printf("mkdir: missing operand \n Try 'man' for more information \n");
           }
           else {
-<<<<<<< HEAD
             directory_add_directory(current,arguments[1]);
             //prolème: le nom est perdu dans le fs
-=======
-            directory_add_directory(current,(char*) arguments[1]);
->>>>>>> f685f3e2c3261d55d2029cdc8e71ad13688a390c
           }
         }
         else if (strcmp(arguments[0], "ls") == 0){

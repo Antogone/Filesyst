@@ -99,12 +99,9 @@ node* directory_add_directory(node* dir, const const char* name){ // OK
 	}
 	directory *ptr = (directory*) dir->data;
 	node* diradd = malloc(sizeof(node));
-<<<<<<< HEAD
 	char* cpname = malloc(100*sizeof(char));
 	strcpy(cpname,name);
 	diradd->name = cpname;
-=======
->>>>>>> f685f3e2c3261d55d2029cdc8e71ad13688a390c
 	diradd->t = DIR;
 	diradd->name = name;
 	diradd->bro = NULL;
@@ -119,7 +116,7 @@ node* directory_add_directory(node* dir, const const char* name){ // OK
 node* directory_add_node(node* dir, node* add){ // OK
 	directory* ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
-		ptr->child = add; 
+		ptr->child = add;
 	}
 	else {
 		node* freebro = ptr->child;
