@@ -6,6 +6,16 @@ int main() {
 
 
     filesystem* fs = malloc(sizeof(filesystem));
+    filesystem_init(fs);
+    directory_add_file(fs->root, "fic.txt");
+    filesystem_print(fs, -1, 0);
+    node* dira = directory_add_directory(fs->root, "Documents");
+    directory_add_file(dira, "fic1.txt");
+    filesystem_print(fs, -1, 0);
+    directory_remove_node(fs->root, "fic.txt");
+    filesystem_print(fs, -1, 0);
+    directory_add_file(fs->root, "fic2.txt");
+    filesystem_print(fs, 3, 0);
     node* current = fs->root;
 
     while (1) {
@@ -24,7 +34,7 @@ int main() {
 
         if (n_args == 0) {
             printf("Veuillez rentrer une commande\n");
-            continue;
+            continue; 
         }
 
 
@@ -40,38 +50,29 @@ int main() {
             printf("\t exit : quitte le programme\n");
 
         }
-        else if (strcmp(arguments[0], "exit") == 0){
+        else if (strcmp(arguments[0], "exit") == 0){ //OK
           filesystem_free(fs);
           exit(0);
         }
         else if (strcmp(arguments[0], "cd") == 0){
-          if(n_args<2){
-            current=filesystem_get_root(fs);
-          }
+          printf("cd\n");
         }
-        else if (strcmp(arguments[0], "pwd") == 0){
+        else if (strcmp(arguments[0], "pwd") == 0){ //OK
           print_path(current);
         }
-        else if (strcmp(arguments[0], "cat") == 0)
+        else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
             printf("cat\n");
-        else if (strcmp(arguments[0], "touch") == 0){
-          if(n_args<2){
-            printf("touch: missing operand \n Try 'man' for more information \n");
-          }
-          else {
-            directory_add_file(current,arguments[1]);
-          }
-        }
-        else if (strcmp(arguments[0], "mkdir") == 0){
+        else if (strcmp(arguments[0], "touch") == 0)  // cree un fichier
+            printf("touch\n");
+        else if (strcmp(arguments[0], "mkdir") == 0){ //OK
           if(n_args<2){
             printf("mkdir: missing operand \n Try 'man' for more information \n");
           }
           else {
-            directory_add_directory(current,arguments[1]);
-            //prolème: le nom est perdu dans le fs
+            directory_add_directory(current,(char*) arguments[1]);
           }
         }
-        else if (strcmp(arguments[0], "ls") == 0){
+        else if (strcmp(arguments[0], "ls") == 0){ // liste les fic et dir du cuirrent
           filesystem_print(fs,1,0);
         }
         else if (strcmp(arguments[0], "tree") == 0){

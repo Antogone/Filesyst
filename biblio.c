@@ -158,11 +158,16 @@ int directory_remove_node(node* dir, const char* name){ //OK
 
 
 file_content* file_get_content(node* file) {
+	struct file* ptr = (struct file*)file->data;
+	return ptr->cont;
 
 }
 
 int file_set_content(node* file, file_content* content) {
-
+	struct file* ptr = (struct file*)file->data;
+	free(ptr->cont);
+	ptr->cont = content;
+	return 0;
 }
 
 /***********************************************/
