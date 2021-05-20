@@ -62,8 +62,18 @@ int main() {
         else if (strcmp(arguments[0], "pwd") == 0) { //OK
             print_path(current);
         }
-        else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
-            printf("cat\n");
+        else if (strcmp(arguments[0], "cat") == 0) {
+            if (directory_find(current, arguments[1]) == NULL) {
+                printf("cat impossible, file not existant\n");
+            }
+            else
+                if (n_args < 2) {
+                    printf("cat: missing operand \n Try 'man' for more information \n");
+                }
+                else
+                    file_print(directory_find(current, arguments[1]), 1);
+
+        }
         else if (strcmp(arguments[0], "touch") == 0){  // OK
             if (n_args < 2) {
                 printf("touch: missing operand \n Try 'man' for more information \n");
