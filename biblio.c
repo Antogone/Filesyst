@@ -40,7 +40,7 @@ node* filesystem_get_root(filesystem *fsys){ // OK
 	return fsys->root;
 }
 
-node* directory_find(node* dir, char* name){ // OK
+node* directory_find(node* dir, const char* name){ // OK
 	if(dir == NULL){
 		return NULL;
 	}
@@ -48,7 +48,7 @@ node* directory_find(node* dir, char* name){ // OK
 	return find_rec(ptr->child,name);
 }
 
-node* find_rec(node* nd, char* name){ // OK
+node* find_rec(node* nd, const char* name){ // OK
 	if(nd == NULL){
     return NULL;
 	}
@@ -71,7 +71,7 @@ node* find_rec(node* nd, char* name){ // OK
 	return find_rec(nd->bro, name);
 }
 
-node* directory_add_file(node* dir, char* name){ // OK
+node* directory_add_file(node* dir, const char* name){ // OK
 
 	if(directory_find(dir,name)!= NULL){
 		return NULL;
@@ -79,7 +79,9 @@ node* directory_add_file(node* dir, char* name){ // OK
 	directory *ptr = (directory*) dir->data;
 	node* fadd = malloc(sizeof(node));
 	fadd->t = FI;
-	fadd->name = name;
+	char* cpname = malloc(100*sizeof(char));
+	strcpy(cpname,name);
+	fadd->name = cpname;
 	fadd->bro = NULL;
 	fadd->broG = NULL;
 	fadd->parent = dir;
@@ -89,14 +91,15 @@ node* directory_add_file(node* dir, char* name){ // OK
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, char* name){ // OK
+node* directory_add_directory(node* dir, const const char* name){ // OK
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
 	directory *ptr = (directory*) dir->data;
-
 	node* diradd = malloc(sizeof(node));
-	diradd->name = name;
+	char* cpname = malloc(100*sizeof(char));
+	strcpy(cpname,name);
+	diradd->name = cpname;
 	diradd->t = DIR;
 	diradd->bro = NULL;
 	diradd->broG = NULL;
@@ -123,7 +126,7 @@ node* directory_add_node(node* dir, node* add){ // OK
 	return add;
 }
 
-int directory_remove_node(node* dir, char* name){ //OK
+int directory_remove_node(node* dir, const char* name){ //OK
 	node* rm = directory_find(dir,name);
 	if(rm==NULL)
 		return 1;

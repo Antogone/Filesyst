@@ -45,24 +45,30 @@ int main() {
           exit(0);
         }
         else if (strcmp(arguments[0], "cd") == 0){
-          printf("cd\n");
+          if(n_args<2){
+            current=filesystem_get_root(fs);
+          }
         }
         else if (strcmp(arguments[0], "pwd") == 0){
           print_path(current);
         }
         else if (strcmp(arguments[0], "cat") == 0)
             printf("cat\n");
-        else if (strcmp(arguments[0], "touch") == 0)
-            printf("touch\n");
+        else if (strcmp(arguments[0], "touch") == 0){
+          if(n_args<2){
+            printf("touch: missing operand \n Try 'man' for more information \n");
+          }
+          else {
+            directory_add_file(current,arguments[1]);
+          }
+        }
         else if (strcmp(arguments[0], "mkdir") == 0){
           if(n_args<2){
             printf("mkdir: missing operand \n Try 'man' for more information \n");
           }
           else {
-            char* name = arguments[1];
-            printf("%s\n", name);
-            node*d=directory_add_directory(current,name);
-            printf("%s\n",d->name);//prolème: le nom est perdu
+            directory_add_directory(current,arguments[1]);
+            //prolème: le nom est perdu dans le fs
           }
         }
         else if (strcmp(arguments[0], "ls") == 0){

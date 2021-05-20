@@ -53,18 +53,18 @@ void free_node(node* n);
 node* filesystem_get_root(filesystem *fsys);
 
 // OK
-node* directory_find(node* dir, char* name);
-node* find_rec(node*dir, char* name);
+node* directory_find(node* dir, const char* name);
+node* find_rec(node*dir, const char* name);
 
 
 // OK
-node* directory_add_file(node* dir, char* name);
-node* directory_add_directory(node* dir, char* name);
+node* directory_add_file(node* dir, const char* name);
+node* directory_add_directory(node* dir, const char* name);
 node* directory_add_node(node* dir, node* add);
 
 
 //OK
-int directory_remove_node(node* dir, char* name);
+int directory_remove_node(node* dir, const char* name);
 
 
 
