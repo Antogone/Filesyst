@@ -56,7 +56,6 @@ int main() {
             filesystem_free(fs);
             exit(0);
         }
-<<<<<<< HEAD
         else if (strcmp(arguments[0], "cd") == 0){
           if(n_args<2){
             current = filesystem_get_root(fs);
@@ -109,7 +108,6 @@ int main() {
         }
         else {
           directory_add_file(current,(char*) arguments[1]);
-=======
         else if (strcmp(arguments[0], "cd") == 0) {
             printf("cd\n");
         }
@@ -129,9 +127,8 @@ int main() {
                     printf("%s", (char*)ptr->cont->desc);
                     printf("\n");
                 }
-                    
 
->>>>>>> 4137a162f6e363dd6966371ea2cb5c22bf181e97
+
         }
         else if (strcmp(arguments[0], "touch") == 0){
             if (n_args < 2) {
@@ -149,16 +146,13 @@ int main() {
             directory_add_directory(current,(char*) arguments[1]);
           }
         }
-<<<<<<< HEAD
         else if (strcmp(arguments[0], "ls") == 0){ // liste les fic et dir du cuirrent
           directory* ptr = (directory*) current->data;
           if(ptr->child!=NULL){
             directory_print(ptr->child,1,1,0);
           }
-=======
         else if (strcmp(arguments[0], "ls") == 0){
           filesystem_print(fs,1,0);
->>>>>>> 4137a162f6e363dd6966371ea2cb5c22bf181e97
         }
         else if (strcmp(arguments[0], "tree") == 0){
             if(strcmp(arguments[1], "1") == 0)
