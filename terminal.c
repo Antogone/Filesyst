@@ -24,7 +24,7 @@ int main() {
 
         if (n_args == 0) {
             printf("Veuillez rentrer une commande\n");
-            continue; 
+            continue;
         }
 
 
@@ -60,8 +60,9 @@ int main() {
           }
           else {
             char* name = arguments[1];
-            directory_add_directory(current,name);
-            //prolème: le nom est perdu
+            printf("%s\n", name);
+            node*d=directory_add_directory(current,name);
+            printf("%s\n",d->name);//prolème: le nom est perdu
           }
         }
         else if (strcmp(arguments[0], "ls") == 0){

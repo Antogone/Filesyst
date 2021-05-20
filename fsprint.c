@@ -62,10 +62,16 @@ void filesystem_print(filesystem* fs, int depth, int with_content) {
 }
 
 void print_path(node* dir){
-  if(dir->name=="root"){
-    printf("/");
+  if(dir == NULL){
     return;
   }
-  print_path(dir->parent);
-  printf("/%s\n",dir->name);
+  if(strcmp(dir->name,"root")==0){
+    printf("~/");
+  }
+  else{
+    print_path(dir->parent);
+    printf("/");
+    printf("%s",dir->name);
+  }
+  printf("\n");
 }
