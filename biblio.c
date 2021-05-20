@@ -93,7 +93,7 @@ node* directory_add_file(node* dir, const char* name){ // OK
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, const const char* name){ // OK
+node* directory_add_directory(node* dir, const char* name){ // OK
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
