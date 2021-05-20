@@ -4,9 +4,9 @@
 
 int main() {
 
-  filesystem *fs = malloc(sizeof(filesystem));
-  filesystem_init(fs);
-  node* current = fs->root;
+
+    filesystem* fs = malloc(sizeof(filesystem));
+    node* current = fs->root;
 
     while (1) {
         char* ligne = NULL; size_t capa = 0;

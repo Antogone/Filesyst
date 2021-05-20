@@ -1,4 +1,6 @@
 #include "biblio.h"
+#include "fsprint.h"
+
 
 
 
@@ -91,7 +93,7 @@ node* directory_add_file(node* dir, const char* name){ // OK
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, const const char* name){ // OK
+node* directory_add_directory(node* dir, const char* name){ // OK
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
@@ -154,6 +156,14 @@ int directory_remove_node(node* dir, const char* name){ //OK
 	return 0;
 }
 
+
+file_content* file_get_content(node* file) {
+
+}
+
+int file_set_content(node* file, file_content* content) {
+
+}
 
 /***********************************************/
 //             déplacé dans fsprint.c
@@ -232,17 +242,17 @@ int directory_remove_node(node* dir, const char* name){ //OK
  * */
 
 
-// int main(){ //(pour tester directement les fonction définies ici)
-// 	filesystem *fs = malloc(sizeof(filesystem));
-// 	filesystem_init(fs);
-// 	directory_add_file(fs->root,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	node* dir = directory_add_directory(fs->root,"Documents");
-// 	directory_add_file(dir,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	directory_remove_node(fs->root,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	directory_add_file(fs->root,"fic.txt");
-// 	filesystem_print(fs,2,0);
-// 	return 0;
-// }
+ //int main(){ //(pour tester directement les fonction définies ici)
+ //	filesystem *fsi = malloc(sizeof(filesystem));
+ //	filesystem_init(fsi);
+ //	directory_add_file(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	node* dir = directory_add_directory(fsi->root,"Documents");
+ //	directory_add_file(dir,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	directory_remove_node(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	directory_add_file(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,2,0);
+ //	return 0;
+ //}
