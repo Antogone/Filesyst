@@ -35,7 +35,7 @@ int main() {
 
         if (n_args == 0) {
             printf("Veuillez rentrer une commande\n");
-            continue; 
+            continue;
         }
 
 
@@ -64,7 +64,12 @@ int main() {
         else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
             printf("cat\n");
         else if (strcmp(arguments[0], "touch") == 0)  // cree un fichier
-            printf("touch\n");
+        if(n_args<2){
+          printf("touch: missing operand \n Try 'man' for more information \n");
+        }
+        else {
+          directory_add_file(current,(char*) arguments[1]);
+        }
         else if (strcmp(arguments[0], "mkdir") == 0){ //OK
           if(n_args<2){
             printf("mkdir: missing operand \n Try 'man' for more information \n");
