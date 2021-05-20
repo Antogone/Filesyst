@@ -1,9 +1,15 @@
 ﻿#include "terminal.h"
+#include "biblio.h"
+#include "fsprint.h"
 
 int main() {
-  
+
+  filesystem *fs = malloc(sizeof(filesystem));
+  filesystem_init(fs);
+  node* current = fs->root;
     while (1) {
         char* ligne = NULL; size_t capa = 0;
+
         printf("$ ");
 
         my_getline(&ligne, &capa, stdin);
@@ -24,6 +30,7 @@ int main() {
 
         if (strcmp(arguments[0], "man") == 0){
             printf("\t cd [dos] : permet de changer de dossier courant \n");
+            printf("\t pwd : permet d'afficher le chemin vers le dossier courant \n");
             printf("\t cat [fic] : permet d’afficher le contenu d’un fichier  \n");
             printf("\t touch [nom.ext] : permet de créer un fichier  \n");
             printf("\t mkdir [nom] : permet de créer un dossier  \n");
@@ -32,28 +39,42 @@ int main() {
             printf("\t exit : quitte le programme\n");
 
         }
-        else if (strcmp(arguments[0], "exit") == 0)
-            exit(0);
-        else if (strcmp(arguments[0], "cd") == 0)
-            printf("cd\n");
-        else if (strcmp(arguments[0], "pwd") == 0)
-            printf("pwd\n");
+        else if (strcmp(arguments[0], "exit") == 0){
+          filesystem_free(fs);
+          exit(0);
+        }
+        else if (strcmp(arguments[0], "cd") == 0){
+          printf("cd\n");
+        }
+        else if (strcmp(arguments[0], "pwd") == 0){
+          print_path(current);
+        }
         else if (strcmp(arguments[0], "cat") == 0)
             printf("cat\n");
         else if (strcmp(arguments[0], "touch") == 0)
             printf("touch\n");
-        else if (strcmp(arguments[0], "mkdir") == 0)
-            printf("mkdir\n");
-        else if (strcmp(arguments[0], "ls") == 0)
-            printf("ls\n");
-        else if (strcmp(arguments[0], "tree") == 0)
-            printf("tree\n");
+        else if (strcmp(arguments[0], "mkdir") == 0){
+          if(n_args<2){
+            printf("mkdir: missing operand \n Try 'man' for more information \n");
+          }
+          else {
+            char* name = arguments[1];
+            directory_add_directory(current,name);
+            //prolème: le nom est perdu
+          }
+        }
+        else if (strcmp(arguments[0], "ls") == 0){
+          filesystem_print(fs,1,0);
+        }
+        else if (strcmp(arguments[0], "tree") == 0){
+          filesystem_print(fs,-1,0);
+        }
         else
             printf("Commande \"%s\" inconnue.\n", arguments[0]);
         free(ligne);
     }
 
-   
+
     system("pause");
     return 0;
 

@@ -66,14 +66,12 @@ int directory_remove_node(node* dir, char* name);
 file_content* file_get_content(node* file);
 int file_set_content(node* file,file_content* content);
 
-
-// Semi OK
-void file_print(node* file, int with_content);
-void directory_print(node* dir,int depth,int with_content,int step);
-void node_print(node* nd, int depth, int with_content,int step);
-char* indent(int step);
-void filesystem_print(filesystem* fs,int depth,int with_content);
-
-
+#include "fsprint.h"
+//OK
+// void file_print(node* file, int with_content);
+// void directory_print(node* dir,int depth,int with_content,int step);
+// void node_print(node* nd, int depth, int with_content,int step);
+// char* indent(int step);
+// void filesystem_print(filesystem* fs,int depth,int with_content);
 
 #endif
