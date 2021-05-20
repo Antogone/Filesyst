@@ -40,7 +40,7 @@ int main() {
 
 
 
-        if (strcmp(arguments[0], "man") == 0){
+        if (strcmp(arguments[0], "man") == 0) {
             printf("\t cd [dos] : permet de changer de dossier courant \n");
             printf("\t pwd : permet d'afficher le chemin vers le dossier courant \n");
             printf("\t cat [fic] : permet d’afficher le contenu d’un fichier  \n");
@@ -52,25 +52,26 @@ int main() {
             printf("\t exit : quitte le programme\n");
 
         }
-        else if (strcmp(arguments[0], "exit") == 0){ //OK
-          filesystem_free(fs);
-          exit(0);
+        else if (strcmp(arguments[0], "exit") == 0) { //OK
+            filesystem_free(fs);
+            exit(0);
         }
-        else if (strcmp(arguments[0], "cd") == 0){
-          printf("cd\n");
+        else if (strcmp(arguments[0], "cd") == 0) {
+            printf("cd\n");
         }
-        else if (strcmp(arguments[0], "pwd") == 0){ //OK
-          print_path(current);
+        else if (strcmp(arguments[0], "pwd") == 0) { //OK
+            print_path(current);
         }
         else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
             printf("cat\n");
-        else if (strcmp(arguments[0], "touch") == 0)  // OK
-        if(n_args<2){
-          printf("touch: missing operand \n Try 'man' for more information \n");
-        }
-        else {
-          directory_add_file(current,(char*) arguments[1]);
-        }
+        else if (strcmp(arguments[0], "touch") == 0){  // OK
+            if (n_args < 2) {
+                printf("touch: missing operand \n Try 'man' for more information \n");
+
+            }
+            else
+                directory_add_file(current, (char*)arguments[1]);
+         }
         else if (strcmp(arguments[0], "mkdir") == 0){ //OK
           if(n_args<2){
             printf("mkdir: missing operand \n Try 'man' for more information \n");
@@ -97,7 +98,7 @@ int main() {
                     printf("edit: missing operand \n Try 'man' for more information \n");
                 }
                 else
-                  file_set_content(directory_find(current, arguments[1]), crea_content(arguments[2]));
+                  file_set_content(directory_find(current, arguments[1]), crea_content((char*) arguments[2]));
         }
         else
             printf("Commande \"%s\" inconnue.\n", arguments[0]);

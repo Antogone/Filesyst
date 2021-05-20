@@ -170,15 +170,16 @@ int file_set_content(node* file, file_content* content) {
 	free(ptr->cont);
 	ptr->cont = malloc(sizeof(file_content));
 	ptr->cont->taille = content->taille;
-	ptr->cont->desc = content->desc;
+	ptr->cont->desc = (char*) content->desc;
 	return 0;
 }
 
 
 file_content* crea_content(char* valeur) {
 	file_content* fic = malloc(sizeof(file_content));
-	fic->desc = valeur;
 	fic->taille = strlen(valeur) + 1;
+	fic->desc = malloc(sizeof(char*)*fic->taille);
+	memcpy(fic->desc, valeur, fic->taille);
 	return fic;
 }
 

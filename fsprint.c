@@ -4,10 +4,9 @@
 
 void file_print(node* file, const int with_content) { // OK (pas testé contenu)
 	struct file* ptr = (struct file*)file->data;
-	if (with_content == 0) 
-		printf("file: %s, size : %d", file->name, ptr->cont->taille);
+	printf("file: %s, size : %d", file->name, ptr->cont->taille);
 	if (with_content != 0)
-		printf("file: %s, content: %s ,size :%d", file->name,ptr->cont->desc, ptr->cont->taille);
+		printf(", content: %s", (char*)ptr->cont->desc);
 	printf("\n");
 }
 
