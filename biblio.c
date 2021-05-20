@@ -1,7 +1,5 @@
 #include "biblio.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+
 
 
 void filesystem_init(filesystem *fs){ //OK

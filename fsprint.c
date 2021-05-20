@@ -1,4 +1,6 @@
 #include "biblio.h"
+#include "fsprint.h"
+
 
 void file_print(node* file, int with_content) { // OK (pas testé contenu)
 	printf("file: %s", file->name);

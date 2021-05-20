@@ -7,6 +7,7 @@ int main() {
   filesystem *fs = malloc(sizeof(filesystem));
   filesystem_init(fs);
   node* current = fs->root;
+
     while (1) {
         char* ligne = NULL; size_t capa = 0;
 
@@ -21,9 +22,9 @@ int main() {
             n_args++;
         }
 
-        if (n_args == 0) { // si la ligne ne contient rien
+        if (n_args == 0) {
             printf("Veuillez rentrer une commande\n");
-            continue; // on reprend au debut de la boucle du terminal
+            continue; 
         }
 
 
