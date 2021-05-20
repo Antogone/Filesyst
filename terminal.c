@@ -4,18 +4,8 @@
 
 int main() {
 
-
     filesystem* fs = malloc(sizeof(filesystem));
     filesystem_init(fs);
-    directory_add_file(fs->root, "fic.txt");
-    filesystem_print(fs, -1, 0);
-    node* dira = directory_add_directory(fs->root, "Documents");
-    directory_add_file(dira, "fic1.txt");
-    filesystem_print(fs, -1, 0);
-    directory_remove_node(fs->root, "fic.txt");
-    filesystem_print(fs, -1, 0);
-    directory_add_file(fs->root, "fic2.txt");
-    filesystem_print(fs, 3, 0);
     node* current = fs->root;
 
     while (1) {
