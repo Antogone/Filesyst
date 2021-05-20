@@ -88,7 +88,6 @@ node* directory_add_file(node* dir, const char* name){
 	fadd->broG = NULL;
 	fadd->parent = dir;
 	file* faddfil = malloc(sizeof(file));
-	faddfil->ext = strstr(name,".");
 	faddfil->cont = malloc(sizeof(file_content));
 	faddfil->cont->taille = 0;
 	fadd->data = faddfil;
