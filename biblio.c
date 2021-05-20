@@ -103,7 +103,6 @@ node* directory_add_directory(node* dir, const char* name){ // OK
 	strcpy(cpname,name);
 	diradd->name = cpname;
 	diradd->t = DIR;
-	diradd->name = name;
 	diradd->bro = NULL;
 	diradd->broG = NULL;
 	diradd->parent = dir;
