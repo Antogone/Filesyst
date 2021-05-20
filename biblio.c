@@ -1,4 +1,6 @@
 #include "biblio.h"
+#include "fsprint.h"
+
 
 
 
@@ -97,10 +99,14 @@ node* directory_add_directory(node* dir, const const char* name){ // OK
 	}
 	directory *ptr = (directory*) dir->data;
 	node* diradd = malloc(sizeof(node));
+<<<<<<< HEAD
 	char* cpname = malloc(100*sizeof(char));
 	strcpy(cpname,name);
 	diradd->name = cpname;
+=======
+>>>>>>> f685f3e2c3261d55d2029cdc8e71ad13688a390c
 	diradd->t = DIR;
+	diradd->name = name;
 	diradd->bro = NULL;
 	diradd->broG = NULL;
 	diradd->parent = dir;
@@ -113,7 +119,7 @@ node* directory_add_directory(node* dir, const const char* name){ // OK
 node* directory_add_node(node* dir, node* add){ // OK
 	directory* ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
-		ptr->child = add;
+		ptr->child = add; 
 	}
 	else {
 		node* freebro = ptr->child;
@@ -154,6 +160,14 @@ int directory_remove_node(node* dir, const char* name){ //OK
 	return 0;
 }
 
+
+file_content* file_get_content(node* file) {
+
+}
+
+int file_set_content(node* file, file_content* content) {
+
+}
 
 /***********************************************/
 //             déplacé dans fsprint.c
@@ -232,17 +246,17 @@ int directory_remove_node(node* dir, const char* name){ //OK
  * */
 
 
-// int main(){ //(pour tester directement les fonction définies ici)
-// 	filesystem *fs = malloc(sizeof(filesystem));
-// 	filesystem_init(fs);
-// 	directory_add_file(fs->root,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	node* dir = directory_add_directory(fs->root,"Documents");
-// 	directory_add_file(dir,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	directory_remove_node(fs->root,"fic.txt");
-// 	filesystem_print(fs,-1,0);
-// 	directory_add_file(fs->root,"fic.txt");
-// 	filesystem_print(fs,2,0);
-// 	return 0;
-// }
+ //int main(){ //(pour tester directement les fonction définies ici)
+ //	filesystem *fsi = malloc(sizeof(filesystem));
+ //	filesystem_init(fsi);
+ //	directory_add_file(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	node* dir = directory_add_directory(fsi->root,"Documents");
+ //	directory_add_file(dir,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	directory_remove_node(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,-1,0);
+ //	directory_add_file(fsi->root,"fic.txt");
+ //	filesystem_print(fsi,2,0);
+ //	return 0;
+ //}
