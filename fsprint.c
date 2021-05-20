@@ -4,7 +4,7 @@
 
 void file_print(node* file, const int with_content) { // OK (pas testé contenu)
 	struct file* ptr = (struct file*)file->data;
-	if (with_content == 0) 
+	if (with_content == 0)
 		printf("file: %s, size : %d", file->name, ptr->cont->taille);
 	if (with_content != 0)
 		printf("file: %s, content: %s ,size :%d", file->name,ptr->cont->desc, ptr->cont->taille);
@@ -66,12 +66,11 @@ void print_path(node* dir){
     return;
   }
   if(strcmp(dir->name,"root")==0){
-    printf("~/");
+    printf("~");
   }
   else{
     print_path(dir->parent);
     printf("/");
     printf("%s",dir->name);
   }
-  printf("\n");
 }

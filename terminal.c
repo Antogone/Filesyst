@@ -61,21 +61,44 @@ int main() {
             current = filesystem_get_root(fs);
           }
           else{
-            char*ret;
-            ret = (char*) memchr(arguments[1],'.',2);
-            if(ret!=NULL){
-              char *token;
-              token = strtok(ret+1, "/");
-              current=directory_find(current,token);
-              while( token != NULL ) {
-                 current=directory_find(current,token);
-                 token = strtok(NULL, "/");
-               }
+            node* new;
+            char* pt;
+            pt = (char*) memchr(arguments[1],'.',2);
+            if(pt!=NULL){
+              char*pt2;
+              pt2 = (char*) memchr(pt+1,'.',2);
+              if(pt2!=NULL){
+                new = current->parent;
+                current = new;
+              }
+              else{
+                char *token;
+                token = strtok(pt+1, "/");
+                while( token != NULL ) {
+                   new = directory_find(current,token);
+                   token = strtok(NULL, "/");
+                   if(new->t!=FI){
+                     current = new;
+                   }
+                }
+              }
             }
+            else{
+              char *token;
+              token = strtok(arguments[1], "/");
+              while( token != NULL ) {
+                 new = directory_find(filesystem_get_root(fs),token);
+                 token = strtok(NULL, "/");
+                 if(new->t!=FI){
+                   current = new;
+                 }
+               }
+             }
           }
         }
         else if (strcmp(arguments[0], "pwd") == 0){ //OK
           print_path(current);
+          printf("\n");
         }
         else if (strcmp(arguments[0], "cat") == 0) // Affiche contenu du fic
             printf("cat\n");
@@ -103,7 +126,7 @@ int main() {
         else if (strcmp(arguments[0], "tree") == 0){ // OK
             if(strcmp(arguments[1], "1") == 0)
                 filesystem_print(fs, -1, 1);
-             else 
+             else
                 filesystem_print(fs,-1,0);
         }
         else if (strcmp(arguments[0], "edit") == 0) { //OK
