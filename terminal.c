@@ -40,7 +40,7 @@ int main() {
 
 
 
-        if (strcmp(arguments[0], "man") == 0){
+        if (strcmp(arguments[0], "man") == 0) {
             printf("\t cd [dos] : permet de changer de dossier courant \n");
             printf("\t pwd : permet d'afficher le chemin vers le dossier courant \n");
             printf("\t cat [fic] : permet d’afficher le contenu d’un fichier  \n");
@@ -52,10 +52,11 @@ int main() {
             printf("\t exit : quitte le programme\n");
 
         }
-        else if (strcmp(arguments[0], "exit") == 0){ //OK
-          filesystem_free(fs);
-          exit(0);
+        else if (strcmp(arguments[0], "exit") == 0) {
+            filesystem_free(fs);
+            exit(0);
         }
+<<<<<<< HEAD
         else if (strcmp(arguments[0], "cd") == 0){
           if(n_args<2){
             current = filesystem_get_root(fs);
@@ -108,8 +109,39 @@ int main() {
         }
         else {
           directory_add_file(current,(char*) arguments[1]);
+=======
+        else if (strcmp(arguments[0], "cd") == 0) {
+            printf("cd\n");
         }
-        else if (strcmp(arguments[0], "mkdir") == 0){ //OK
+        else if (strcmp(arguments[0], "pwd") == 0) {
+            print_path(current);
+        }
+        else if (strcmp(arguments[0], "cat") == 0) {
+            if (directory_find(current, arguments[1]) == NULL) {
+                printf("cat impossible, file not existant\n");
+            }
+            else
+                if (n_args < 2) {
+                    printf("cat: missing operand \n Try 'man' for more information \n");
+                }
+                else {
+                    struct file* ptr = (struct file*)directory_find(current, arguments[1])->data;
+                    printf("%s", (char*)ptr->cont->desc);
+                    printf("\n");
+                }
+                    
+
+>>>>>>> 4137a162f6e363dd6966371ea2cb5c22bf181e97
+        }
+        else if (strcmp(arguments[0], "touch") == 0){
+            if (n_args < 2) {
+                printf("touch: missing operand \n Try 'man' for more information \n");
+
+            }
+            else
+                directory_add_file(current, (char*)arguments[1]);
+         }
+        else if (strcmp(arguments[0], "mkdir") == 0){
           if(n_args<2){
             printf("mkdir: argument manquant \n Essayez la commande 'man' pour plus d'information");
           }
@@ -117,19 +149,24 @@ int main() {
             directory_add_directory(current,(char*) arguments[1]);
           }
         }
+<<<<<<< HEAD
         else if (strcmp(arguments[0], "ls") == 0){ // liste les fic et dir du cuirrent
           directory* ptr = (directory*) current->data;
           if(ptr->child!=NULL){
             directory_print(ptr->child,1,1,0);
           }
+=======
+        else if (strcmp(arguments[0], "ls") == 0){
+          filesystem_print(fs,1,0);
+>>>>>>> 4137a162f6e363dd6966371ea2cb5c22bf181e97
         }
-        else if (strcmp(arguments[0], "tree") == 0){ // OK
+        else if (strcmp(arguments[0], "tree") == 0){
             if(strcmp(arguments[1], "1") == 0)
                 filesystem_print(fs, -1, 1);
              else
                 filesystem_print(fs,-1,0);
         }
-        else if (strcmp(arguments[0], "edit") == 0) { //OK
+        else if (strcmp(arguments[0], "edit") == 0) {
             if (directory_find(current, arguments[1]) == NULL) {
                 printf("edit impossible, file not existant\n");
             }
@@ -138,7 +175,7 @@ int main() {
                     printf("edit: missing operand \n Try 'man' for more information \n");
                 }
                 else
-                  file_set_content(directory_find(current, arguments[1]), crea_content(arguments[2]));
+                  file_set_content(directory_find(current, arguments[1]), crea_content((char*) arguments[2]));
         }
         else
             printf("Commande \"%s\" inconnue.\n", arguments[0]);

@@ -4,7 +4,7 @@
 
 
 
-void filesystem_init(filesystem *fs){ //OK
+void filesystem_init(filesystem *fs){
 	fs->root = malloc(sizeof(node));
 	fs->root->name = malloc(10*sizeof(char));
 	strcpy(fs->root->name,"root");
@@ -17,14 +17,14 @@ void filesystem_init(filesystem *fs){ //OK
 	fs->root->data = dir;
 }
 
-void filesystem_free(filesystem *fs){ // OK
+void filesystem_free(filesystem *fs){
 	if(fs == NULL)
     return;
 	free_node(fs->root);
 	free(fs);
 }
 
-void free_node(node* nd){  // OK
+void free_node(node* nd){
 	if(nd == NULL)
     return;
 	if (nd->t == DIR){
@@ -38,11 +38,11 @@ void free_node(node* nd){  // OK
 	free(nd);
 }
 
-node* filesystem_get_root(filesystem *fsys){ // OK
+node* filesystem_get_root(filesystem *fsys){
 	return fsys->root;
 }
 
-node* directory_find(node* dir, const char* name){ // OK
+node* directory_find(node* dir, const char* name){
 	if(dir == NULL){
 		return NULL;
 	}
@@ -50,7 +50,7 @@ node* directory_find(node* dir, const char* name){ // OK
 	return find_rec(ptr->child,name);
 }
 
-node* find_rec(node* nd, const char* name){ // OK
+node* find_rec(node* nd, const char* name){
 	if(nd == NULL){
     return NULL;
 	}
@@ -73,7 +73,7 @@ node* find_rec(node* nd, const char* name){ // OK
 	return find_rec(nd->bro, name);
 }
 
-node* directory_add_file(node* dir, const char* name){ // OK
+node* directory_add_file(node* dir, const char* name){
 
 	if(directory_find(dir,name)!= NULL){
 		return NULL;
@@ -96,7 +96,7 @@ node* directory_add_file(node* dir, const char* name){ // OK
 	return directory_add_node(dir,fadd);
 }
 
-node* directory_add_directory(node* dir, const char* name){ // OK
+node* directory_add_directory(node* dir, const char* name){
 	if(directory_find(dir,name)!=NULL){
 		return NULL;
 	}
@@ -115,7 +115,7 @@ node* directory_add_directory(node* dir, const char* name){ // OK
 	return directory_add_node(dir,diradd);
 }
 
-node* directory_add_node(node* dir, node* add){ // OK
+node* directory_add_node(node* dir, node* add){
 	directory* ptr = (directory*) dir->data;
 	if(ptr->child==NULL){
 		ptr->child = add;
@@ -131,12 +131,10 @@ node* directory_add_node(node* dir, node* add){ // OK
 	return add;
 }
 
-int directory_remove_node(node* dir, const char* name){ //OK
+int directory_remove_node(node* dir, const char* name){
 	node* rm = directory_find(dir,name);
 	if(rm==NULL)
 		return 1;
-
-	// Redirection
 	node* prev = rm->broG;
 	node* next = rm->bro;
 	node* par = rm->parent;
@@ -170,106 +168,17 @@ int file_set_content(node* file, file_content* content) {
 	free(ptr->cont);
 	ptr->cont = malloc(sizeof(file_content));
 	ptr->cont->taille = content->taille;
-	ptr->cont->desc = content->desc;
+	ptr->cont->desc = (char*) content->desc;
 	return 0;
 }
 
 
 file_content* crea_content(char* valeur) {
 	file_content* fic = malloc(sizeof(file_content));
-	fic->desc = valeur;
 	fic->taille = strlen(valeur) + 1;
+	fic->desc = malloc(sizeof(char*)*fic->taille);
+	memcpy(fic->desc, valeur, fic->taille);
 	return fic;
 }
 
-/***********************************************/
-//             déplacé dans fsprint.c
-//
-// void file_print(node* file, int with_content) { // OK (pas testé contenu)
-// 	printf("file: %s", file->name);
-// 	if (with_content != 0) {
-// 		struct file* ptr = (struct file*)file->data;
-// 		printf(",content: %s,size :%d", ptr->cont->desc,ptr->cont->taille);
-// 	}
-// 	printf("\n");
-// }
-//
-//
-//
-// void directory_print(node* dir, int depth, int with_content,int step) {//penser à mettre step=0 au premier appel
-// 	// depth = profondeur max
-// 	// with_content = si on affiche le contenu des fichiers
-// 	printf("directory: %s\n",dir->name);
-// 	if (depth<=0){
-// 		directory* ptr = (directory*)dir->data;
-// 		node_print(ptr->child,depth,with_content,step+1);
-// 	}
-// 	else{
-// 		depth-=1;
-// 		if(depth){
-// 			directory* ptr = (directory*)dir->data;
-// 			node_print(ptr->child,depth,with_content,step+1);
-// 		}
-// 	}
-// }
-// void node_print(node* nd, int depth, int with_content,int step){
-// 		while (nd!=NULL){
-// 			char* strplus = indent(step);
-// 			printf("%s",strplus);
-// 			if(nd->t==DIR){
-// 				directory_print(nd,depth,with_content,step);
-// 			}
-// 			else{
-// 				file_print(nd,with_content);
-// 			}
-// 			nd = nd->bro;
-// 		}
-// }
-// char* indent(int step){
-// 	char* strplus = malloc((step+10)*sizeof(char));
-// 	char* strdec = "\t";
-// 	for (int i = 0; i < step; i++) {
-// 		strcat(strplus, strdec);
-// 	}
-// 	strcat(strplus, "+ ");
-// 	return strplus;
-// }
-// void filesystem_print(filesystem* fs, int depth, int with_content) {
-// 	printf("filesystem");
-// 	if(fs->filesystname!=NULL){
-// 		printf("%s", fs->filesystname);
-// 	}
-// 	printf("\n");
-// 	node_print(fs->root,depth,with_content,0);
-// }
 
-
-/*
- * modèle d'utilisation des types de noeud dans une fonction
- *
- * void foo(node *nd) {
- * 	if (nd->type == 0){
- * 		directory *ptr = (directory*) nd->data;
- * 	}
- * 	if (nd->type ==1){
- * 		file *ptr = (file*) nd->data;
- * 	}
- * }
- *
- * */
-
-
- //int main(){ //(pour tester directement les fonction définies ici)
- //	filesystem *fsi = malloc(sizeof(filesystem));
- //	filesystem_init(fsi);
- //	directory_add_file(fsi->root,"fic.txt");
- //	filesystem_print(fsi,-1,0);
- //	node* dir = directory_add_directory(fsi->root,"Documents");
- //	directory_add_file(dir,"fic.txt");
- //	filesystem_print(fsi,-1,0);
- //	directory_remove_node(fsi->root,"fic.txt");
- //	filesystem_print(fsi,-1,0);
- //	directory_add_file(fsi->root,"fic.txt");
- //	filesystem_print(fsi,2,0);
- //	return 0;
- //}
