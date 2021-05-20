@@ -56,7 +56,22 @@ int main() {
           exit(0);
         }
         else if (strcmp(arguments[0], "cd") == 0){
-          printf("cd\n");
+          if(n_args<2){
+            current = filesystem_get_root(fs);
+          }
+          else{
+            char*ret;
+            ret = (char*) memchr(arguments[1],'.',2);
+            if(ret!=NULL){
+              char *token;
+              token = strtok(ret+1, "/");
+              current=directory_find(current,token);
+              while( token != NULL ) {
+                 current=directory_find(current,token);
+                 token = strtok(NULL, "/");
+               }
+            }
+          }
         }
         else if (strcmp(arguments[0], "pwd") == 0){ //OK
           print_path(current);
@@ -65,21 +80,24 @@ int main() {
             printf("cat\n");
         else if (strcmp(arguments[0], "touch") == 0)  // cree un fichier
         if(n_args<2){
-          printf("touch: missing operand \n Try 'man' for more information \n");
+          printf("touch: argument manquant \n Essayez la commande 'man' pour plus d'information \n");
         }
         else {
           directory_add_file(current,(char*) arguments[1]);
         }
         else if (strcmp(arguments[0], "mkdir") == 0){ //OK
           if(n_args<2){
-            printf("mkdir: missing operand \n Try 'man' for more information \n");
+            printf("mkdir: argument manquant \n Essayez la commande 'man' pour plus d'information");
           }
           else {
             directory_add_directory(current,(char*) arguments[1]);
           }
         }
         else if (strcmp(arguments[0], "ls") == 0){ // liste les fic et dir du cuirrent
-          filesystem_print(fs,1,0);
+          directory* ptr = (directory*) current->data;
+          if(ptr->child!=NULL){
+            directory_print(ptr->child,1,1,0);
+          }
         }
         else if (strcmp(arguments[0], "tree") == 0){
           filesystem_print(fs,-1,0);
