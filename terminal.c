@@ -69,7 +69,9 @@ int main() {
                     pt2 = (char*)memchr(pt + 1, '.', 2);
                     if (pt2 != NULL) {
                         new = current->parent;
-                        current = new;
+                        if ((new!=NULL)&&(new->t != FI)) {
+                            current = new;
+                        }
                     }
                     else {
                         char* token;
@@ -77,7 +79,7 @@ int main() {
                         while (token != NULL) {
                             new = directory_find(current, token);
                             token = strtok(NULL, "/");
-                            if (new->t != FI) {
+                            if ((new!=NULL)&&(new->t != FI)) {
                                 current = new;
                             }
                         }
@@ -89,19 +91,17 @@ int main() {
                     while (token != NULL) {
                         new = directory_find(filesystem_get_root(fs), token);
                         token = strtok(NULL, "/");
-                        if (new->t != FI) {
+                        if ((new!=NULL)&&(new->t != FI)) {
                             current = new;
                         }
                     }
                 }
+                if(new==NULL){printf("cd : impossible de se déplacer dans ce dossier \n");}
             }
         }
         else if (strcmp(arguments[0], "pwd") == 0) { //OK
             print_path(current);
             printf("\n");
-        }
-        else if (strcmp(arguments[0], "cat") == 0) {// Affiche contenu du fic
-            printf("cat\n");
         }
         else if (strcmp(arguments[0], "touch") == 0) {  // OK
             if (n_args < 2) {
@@ -110,12 +110,6 @@ int main() {
             else {
                 directory_add_file(current, (char*)arguments[1]);
             }
-        }
-        else if (strcmp(arguments[0], "cd") == 0) {
-            printf("cd\n");
-        }
-        else if (strcmp(arguments[0], "pwd") == 0) {
-            print_path(current);
         }
         else if (strcmp(arguments[0], "cat") == 0) {
             if (directory_find(current, arguments[1]) == NULL) {
@@ -131,14 +125,6 @@ int main() {
                     printf("\n");
                 }
             }
-          }
-          else if (strcmp(arguments[0], "touch") == 0) {
-            if (n_args < 2) {
-                printf("touch: missing operand \n Try 'man' for more information \n");
-
-            }
-            else
-                directory_add_file(current, (char*)arguments[1]);
           }
           else if (strcmp(arguments[0], "mkdir") == 0) {
             if (n_args < 2) {
