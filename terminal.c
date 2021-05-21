@@ -7,15 +7,21 @@ int main() {
     filesystem* fs = malloc(sizeof(filesystem));
     filesystem_init(fs);
 
-    //directory_add_file(fs->root, "fic.txt");
-    //filesystem_print(fs, -1, 0);
-    //node* dira = directory_add_directory(fs->root, "Documents");
-    //directory_add_file(dira, "fic1.txt");
-    //filesystem_print(fs, -1, 0);
-    //directory_remove_node(fs->root, "fic.txt");
-    //filesystem_print(fs, -1, 0);
-    //directory_add_file(fs->root, "fic2.txt");
-    //filesystem_print(fs, 3, 0);
+    directory_add_file(fs->root, "rootfile");
+    file_set_content(directory_find(fs->root, "rootfile"), crea_content("This is a file at root."));
+
+    node* dira = directory_add_directory(fs->root, "dirA");
+    directory_add_file(dira, "fileAA");
+    directory_add_file(dira, "fileAB");
+    file_set_content(directory_find(dira, "fileAA"), crea_content("This is file fileAA."));
+    file_set_content(directory_find(dira, "fileAB"), crea_content("This is file fileAB."));
+    node* dirb = directory_add_directory(fs->root, "dirB");
+    directory_add_file(dirb, "fileBA");
+    directory_add_file(dirb, "fileBB");
+    file_set_content(directory_find(dirb, "fileBA"), crea_content("This is file fileBA."));
+    file_set_content(directory_find(dirb, "fileBB"), crea_content("This is file fileBB."));
+   
+    filesystem_print(fs, 3, 1);
 
     node* current = fs->root;
 
@@ -99,7 +105,7 @@ int main() {
                 if(new==NULL){printf("cd : impossible de se déplacer dans ce dossier \n");}
             }
         }
-        else if (strcmp(arguments[0], "pwd") == 0) { 
+        else if (strcmp(arguments[0], "pwd") == 0) {
             print_path(current);
             printf("\n");
         }
