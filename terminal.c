@@ -99,11 +99,11 @@ int main() {
                 if(new==NULL){printf("cd : impossible de se déplacer dans ce dossier \n");}
             }
         }
-        else if (strcmp(arguments[0], "pwd") == 0) { //OK
+        else if (strcmp(arguments[0], "pwd") == 0) { 
             print_path(current);
             printf("\n");
         }
-        else if (strcmp(arguments[0], "touch") == 0) {  // OK
+        else if (strcmp(arguments[0], "touch") == 0) {
             if (n_args < 2) {
                 printf("touch: argument manquant \n Essayez la commande 'man' pour plus d'information \n");
             }
@@ -113,11 +113,11 @@ int main() {
         }
         else if (strcmp(arguments[0], "cat") == 0) {
             if (directory_find(current, arguments[1]) == NULL) {
-                printf("cat impossible, file not existant\n");
+                printf("cat impossible, fichier non existant\n");
             }
             else{
                 if (n_args < 2) {
-                    printf("cat: missing operand \n Try 'man' for more information \n");
+                    printf("cat: argument manquant \n Essayez la commande 'man' pour plus d'information \n");
                 }
                 else {
                     struct file* ptr = (struct file*)directory_find(current, arguments[1])->data;
@@ -134,7 +134,7 @@ int main() {
                 directory_add_directory(current, (char*)arguments[1]);
             }
           }
-          else if (strcmp(arguments[0], "ls") == 0) { // liste les fic et dir du current
+          else if (strcmp(arguments[0], "ls") == 0) {
             directory* ptr = (directory*)current->data;
             if (ptr->child != NULL) {
                 node_print(ptr->child, 1, 1, 0);
@@ -164,7 +164,7 @@ int main() {
                 }
                 else{
                     if (n_args < 3) {
-                        printf("edit: missing operand \n Try 'man' for more information \n");
+                        printf("edit: argument manquant \n Essayez 'man' pour plus d'information \n");
                     }
                     else
                         file_set_content(directory_find(current, arguments[1]), crea_content((char*)arguments[2]));

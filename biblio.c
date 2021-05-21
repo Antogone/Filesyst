@@ -156,7 +156,6 @@ int directory_remove_node(node* dir, const char* name){
 	return 0;
 }
 
-
 file_content* file_get_content(node* file) {
 	struct file* ptr = (struct file*)file->data;
 	return ptr->cont;
@@ -170,7 +169,6 @@ int file_set_content(node* file, file_content* content) {
 	ptr->cont->desc = (char*) content->desc;
 	return 0;
 }
-
 
 file_content* crea_content(char* valeur) {
 	file_content* fic = malloc(sizeof(file_content));
